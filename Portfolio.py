@@ -202,7 +202,7 @@ nav = st.sidebar.selectbox("", ["Home", "Education", "Work Experience", "Project
 if nav == "Home":
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.image("/home/harshvardhan.mishra/AI_project/ANN Project/annclassification/harsh_portfolio.jpeg", width=250)
+        st.image("/home/harshvardhan.mishra/AI_project/RNN/harsh_portfolio.jpeg", width=250)
     with col2:
         st.markdown("<h2 class='sub-header'>Welcome to My Professional Portfolio</h2>", unsafe_allow_html=True)
         st.write("As an aspiring data scientist, I combine analytical prowess with a passion for innovative problem-solving. My expertise lies in leveraging cutting-edge AI and ML techniques to extract meaningful insights from complex datasets, driving data-informed decision-making across various domains.")
@@ -265,4 +265,3 @@ else:
 
 # # Add a final check
 # st.write("Debugging info:", portfolio_data)
-
