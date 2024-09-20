@@ -1,8 +1,18 @@
 import streamlit as st
 from PIL import Image
+import platform
+
+def is_mobile():
+    return platform.name.lower() in ['ios', 'android']
+
+def display_content(content):
+    if is_mobile():
+        st.markdown(content, unsafe_allow_html=True)
+    else:
+        st.write(content)
 
 # Set page configuration
-st.set_page_config(page_title="Harsh Vardhan Mishra's Portfolio", page_icon=":star:", layout="wide")
+st.set_page_config(page_title="Harsh Vardhan Mishra's Portfolio", page_icon=":rocket:", layout="wide")
 
 # Portfolio Data
 portfolio_data = {
@@ -36,18 +46,29 @@ portfolio_data = {
     "projects": [
         {
             "title": "Google Stock Price Prediction",
-            "description": "Developed an RNN-LSTM model achieving 75% accuracy."
+            "description": [
+                "Developed an RNN-LSTM model achieving 75% accuracy.",
+                "This project involved extensive data preprocessing and hyperparameter tuning."
+            ],
+            "link": "https://github.com/Harsh-hub123/Stock-market-prediction-system-RNN-LSTM"
         },
         {
-            "title": "Sales Analytics",
-            "description": "Created Power BI dashboards to analyze sales and profit data."
+            "title": "Customer Churn Prediction Project",
+            "description": [
+                "Designed and trained a neural network model capable of processing complex, multi-dimensional customer data.",
+                "Implemented advanced data preprocessing techniques, including one-hot encoding, label encoding, and feature scaling."
+            ],
+            "link": "https://github.com/Harsh-hub123/Customer-Churn-Prediction"
         },
         {
             "title": "Iris-2D Dataset ML Algorithm",
-            "description": "Achieved 95% accuracy in classifying Iris flowers using machine learning."
+            "description": [
+                "Achieved 95% accuracy in classifying Iris flowers using machine learning.",
+                "Focused on applying supervised learning techniques to derive insights."
+            ]
         }
     ],
-    "skills": ["Python", "Generative AI","Google Palm", "Hugging Face", "Prompt Engineering","Azure Services" ,"Pandas", "Scikit-learn", "OpenCV", "TensorFlow"],
+    "skills": ["Python", "Pandas", "Generative AI", "Prompt Engineering", "Google Palm", "Hugging Face", "Langchain", "Machine Learning", "Scikit-learn", "OpenCV", "TensorFlow", "Keras"],
     "achievements": [
         "Participated in PowerBI Workshop by Growth School",
         "Presented research paper at ICADRIIA'23",
@@ -58,139 +79,190 @@ portfolio_data = {
 # Custom CSS for better design and technical background
 st.markdown("""
     <style>
-        /* Custom Font */
-        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
         body {
-            font-family: 'Raleway', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #2C3E50;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
         }
         .main-header {
-            font-size: 50px;
-            color: #2C3E50;
-            font-weight: bold;
+            font-size: 2.8rem;
+            color: #1a237e;
+            font-weight: 700;
             text-align: center;
-            padding-top: 50px;
+            padding-top: 2rem;
+            margin-bottom: 1rem;
         }
         .sub-header {
-            font-size: 25px;
-            color: #2980b9;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #283593;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
         }
         .section {
-            background-color: white;
-            padding: 30px;
-            margin: 20px 0;
-            border-radius: 10px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
         .skills-list {
             display: flex;
             flex-wrap: wrap;
             list-style-type: none;
             padding: 0;
+            justify-content: center;
         }
         .skills-list li {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin: 5px;
-            transition: background-color 0.3s ease;
+            background-color: #e8eaf6;
+            color: #3f51b5;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
         .skills-list li:hover {
-            background-color: #2980b9;
+            background-color: #3f51b5;
+            color: #ffffff;
+            transform: scale(1.05);
         }
         .contact-info {
-            font-size: 18px;
-            color: #3498DB;
+            font-size: 1.1rem;
+            color: #3f51b5;
         }
         img {
             border-radius: 50%;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 3px solid #3f51b5;
         }
         .footer {
             text-align: center;
-            padding: 20px;
-            font-size: 14px;
-            color: #95a5a6;
+            padding: 2rem;
+            font-size: 1rem;
+            color: #ffffff;
+            background-color: #1a237e;
+            border-radius: 8px;
+            margin-top: 2rem;
         }
-        /* Icon styling */
-        .fa {
-            margin-right: 8px;
-            font-size: 18px;
-            color: #3498DB;
+        .custom-button {
+            background-color: #3f51b5;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .custom-button:hover {
+            background-color: #1a237e;
+            transform: scale(1.05);
+        }
+        .stSelectbox [data-baseweb=select] {
+            background-color: #ffffff;
+            border-radius: 8px;
+            color: #333;
+            border: 1px solid #3f51b5;
+        }
+        .stSelectbox [data-baseweb=select]:hover {
+            border-color: #1a237e;
+        }
+        .highlight {
+            color: #3f51b5;
+            font-weight: 500;
+        }
+        .project-title {
+            color: #1a237e;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .experience-title {
+            color: #1a237e;
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
         }
     </style>
 """, unsafe_allow_html=True)
 
 # Add a title and subtitle to the portfolio
-st.markdown("<h1 class='main-header'>Harsh Vardhan Mishra's Portfolio</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-header'>Harsh Vardhan Mishra</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; font-size: 1.3rem; color: #3f51b5;'>Aspiring Data Scientist | ML Enthusiast | Innovative Problem Solver</p>", unsafe_allow_html=True)
 
-# Sidebar navigation
-st.sidebar.title("Navigate")
-nav = st.sidebar.radio("Go to", ["Home", "Education", "Work Experience", "Projects", "Skills", "Achievements"])
+# Sidebar navigation with custom dropdown
+st.sidebar.markdown("<h2 style='color: #1a237e;'>Portfolio Navigation</h2>", unsafe_allow_html=True)
+nav = st.sidebar.selectbox("", ["Home", "Education", "Work Experience", "Projects", "Skills", "Achievements"], key="nav")
 
-# Home Section
+# Home Section with your own image
 if nav == "Home":
-    st.markdown("<h2 class='sub-header'>Welcome!</h2>", unsafe_allow_html=True)
-    st.image("https://avatars.githubusercontent.com/u/67681885?v=4", width=200)  # Replace with your own image
-    st.write("I am Harsh Vardhan Mishra, a passionate data scientist eager to explore and apply new technologies.")
-    st.markdown(f"<p class='contact-info'>📧 <a href='mailto:{portfolio_data['email']}'>{portfolio_data['email']}</a></p>", unsafe_allow_html=True)
-    st.markdown(f"<p class='contact-info'>📱 {portfolio_data['phone']}</p>", unsafe_allow_html=True)
-    st.markdown("[GitHub](https://github.com/Harsh-hub123) | [LinkedIn](https://www.linkedin.com/in/harsh4744/)")
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        st.image("/home/harshvardhan.mishra/AI_project/ANN Project/annclassification/harsh_portfolio.jpeg", width=250)
+    with col2:
+        st.markdown("<h2 class='sub-header'>Welcome to My Professional Portfolio</h2>", unsafe_allow_html=True)
+        st.write("As an aspiring data scientist, I combine analytical prowess with a passion for innovative problem-solving. My expertise lies in leveraging cutting-edge AI and ML techniques to extract meaningful insights from complex datasets, driving data-informed decision-making across various domains.")
+        st.markdown(f"<p class='contact-info'>📧 <a href='mailto:{portfolio_data['email']}' style='color: #3f51b5;'>{portfolio_data['email']}</a></p>", unsafe_allow_html=True)
+        st.markdown(f"<p class='contact-info'>📱 {portfolio_data['phone']}</p>", unsafe_allow_html=True)
 
-# Education Section
-if nav == "Education":
-    st.markdown("<h2 class='sub-header'>Education</h2>", unsafe_allow_html=True)
-    for edu in portfolio_data["education"]:
-        st.markdown(f"""
-        <div class="section">
-            <strong>{edu['degree']}</strong> - {edu['institution']} <br>
-            <i>{edu['year']}</i> <br>
-            GPA: {edu.get('gpa', edu.get('percentage'))}
-        </div>
-        """, unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown(f"<a href='https://github.com/Harsh-hub123' target='_blank'><button class='custom-button'>GitHub Profile</button></a>", unsafe_allow_html=True)
+        with col2:
+            st.markdown(f"<a href='https://www.linkedin.com/in/your-profile' target='_blank'><button class='custom-button'>LinkedIn Profile</button></a>", unsafe_allow_html=True)
 
-# Work Experience Section with expanders
-if nav == "Work Experience":
-    st.markdown("<h2 class='sub-header'>Work Experience</h2>", unsafe_allow_html=True)
-    for job in portfolio_data["work_experience"]:
-        with st.expander(f"{job['role']} at {job['company']} ({job['duration']})"):
-            for desc in job["description"]:
-                st.write(f"- {desc}")
+# Other sections
+else:
+    if nav == "Education":
+        st.header("Education")
+        for item in portfolio_data["education"]:
+            st.subheader(item["degree"])
+            st.write(f"Institution: {item['institution']}")
+            st.write(f"Year: {item['year']}")
+            if "gpa" in item:
+                st.write(f"GPA: {item['gpa']}")
+            elif "percentage" in item:
+                st.write(f"Percentage: {item['percentage']}")
 
-# Projects Section with clickable links
-if nav == "Projects":
-    st.markdown("<h2 class='sub-header'>Projects</h2>", unsafe_allow_html=True)
-    for project in portfolio_data["projects"]:
-        st.markdown(f"""
-        <div class="section">
-            <strong>{project['title']}</strong>: {project['description']} <br>
-            {f'[View on GitHub](https://github.com/Harsh-hub123/Stock-market-prediction-system-RNN-LSTM)' if project['title'] == 'Google Stock Price Prediction' else ''}
-        </div>
-        """, unsafe_allow_html=True)
+    # Work Experience Section
+    elif nav == "Work Experience":
+        st.header("Work Experience")
+        for item in portfolio_data.get("work_experience", []):
+            st.subheader(item.get("role", ""))
+            st.write(f"Company: {item.get('company', '')}")
+            st.write(f"Duration: {item.get('duration', '')}")
+            for description in item.get("description", []):
+                st.write(description)
 
-# Skills Section with tags and hover effects
-if nav == "Skills":
-    st.markdown("<h2 class='sub-header'>Technical Skills</h2>", unsafe_allow_html=True)
-    st.markdown("<ul class='skills-list'>", unsafe_allow_html=True)
-    for skill in portfolio_data["skills"]:
-        st.markdown(f"<li>{skill}</li>", unsafe_allow_html=True)
-    st.markdown("</ul>", unsafe_allow_html=True)
+    # Projects Section
+    elif nav == "Projects":
+        st.header("Projects")
+        for item in portfolio_data.get("projects", []):
+            st.subheader(item.get("title", ""))
+            for description in item.get("description", []):
+                st.write(description)
+            if item.get("link"):
+                st.markdown(f"[View on GitHub]({item['link']})")
 
-# Achievements Section
-if nav == "Achievements":
-    st.markdown("<h2 class='sub-header'>Achievements and Participation</h2>", unsafe_allow_html=True)
-    for achievement in portfolio_data["achievements"]:
-        st.markdown(f"""
-        <div class="section">
-            <strong>{achievement}</strong>
-        </div>
-        """, unsafe_allow_html=True)
+    # Skills Section
+    elif nav == "Skills":
+        st.header("Skills")
+        skills_list = portfolio_data.get("skills", [])
+        st.write("Technical skills:")
+        for skill in skills_list:
+            st.write(skill)
 
-# Footer Section
-st.sidebar.markdown("---")
-st.sidebar.write("Designed with ❤️ using Streamlit")
+    # Achievements Section
+    elif nav == "Achievements":
+        st.header("Achievements")
+        achievements_list = portfolio_data.get("achievements", [])
+        for achievement in achievements_list:
+            st.write(achievement)
 
-st.markdown("<div class='footer'>Built by Harsh Vardhan Mishra | Powered by Streamlit</div>", unsafe_allow_html=True)
+# # Add a final check
+# st.write("Debugging info:", portfolio_data)
+
