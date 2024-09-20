@@ -3,7 +3,7 @@ from PIL import Image
 import platform
 
 def is_mobile():
-    return platform.name.lower() in ['ios', 'android']
+    return platform.system().lower() in ['ios', 'android']
 
 def display_content(content):
     if is_mobile():
@@ -215,53 +215,52 @@ if nav == "Home":
         with col2:
             st.markdown(f"<a href='https://www.linkedin.com/in/your-profile' target='_blank'><button class='custom-button'>LinkedIn Profile</button></a>", unsafe_allow_html=True)
 
-# Other sections
-else:
-    if nav == "Education":
-        st.header("Education")
-        for item in portfolio_data["education"]:
-            st.subheader(item["degree"])
-            st.write(f"Institution: {item['institution']}")
-            st.write(f"Year: {item['year']}")
-            if "gpa" in item:
-                st.write(f"GPA: {item['gpa']}")
-            elif "percentage" in item:
-                st.write(f"Percentage: {item['percentage']}")
+# Education Section
+elif nav == "Education":
+    st.header("Education")
+    for item in portfolio_data["education"]:
+        st.subheader(item["degree"])
+        st.write(f"Institution: {item['institution']}")
+        st.write(f"Year: {item['year']}")
+        if "gpa" in item:
+            st.write(f"GPA: {item['gpa']}")
+        elif "percentage" in item:
+            st.write(f"Percentage: {item['percentage']}")
 
-    # Work Experience Section
-    elif nav == "Work Experience":
-        st.header("Work Experience")
-        for item in portfolio_data.get("work_experience", []):
-            st.subheader(item.get("role", ""))
-            st.write(f"Company: {item.get('company', '')}")
-            st.write(f"Duration: {item.get('duration', '')}")
-            for description in item.get("description", []):
-                st.write(description)
+# Work Experience Section
+elif nav == "Work Experience":
+    st.header("Work Experience")
+    for item in portfolio_data.get("work_experience", []):
+        st.subheader(item.get("role", ""))
+        st.write(f"Company: {item.get('company', '')}")
+        st.write(f"Duration: {item.get('duration', '')}")
+        for description in item.get("description", []):
+            st.write(f"- {description}")
 
-    # Projects Section
-    elif nav == "Projects":
-        st.header("Projects")
-        for item in portfolio_data.get("projects", []):
-            st.subheader(item.get("title", ""))
-            for description in item.get("description", []):
-                st.write(description)
-            if item.get("link"):
-                st.markdown(f"[View on GitHub]({item['link']})")
+# Projects Section
+elif nav == "Projects":
+    st.header("Projects")
+    for item in portfolio_data.get("projects", []):
+        st.subheader(item.get("title", ""))
+        for description in item.get("description", []):
+            st.write(f"- {description}")
+        if item.get("link"):
+            st.markdown(f"[View on GitHub]({item['link']})", unsafe_allow_html=True)
 
-    # Skills Section
-    elif nav == "Skills":
-        st.header("Skills")
-        skills_list = portfolio_data.get("skills", [])
-        st.write("Technical skills:")
-        for skill in skills_list:
-            st.write(skill)
+# Skills Section
+elif nav == "Skills":
+    st.header("Skills")
+    skills_list = portfolio_data.get("skills", [])
+    st.write("Technical skills:")
+    for skill in skills_list:
+        st.write(f"- {skill}")
 
-    # Achievements Section
-    elif nav == "Achievements":
-        st.header("Achievements")
-        achievements_list = portfolio_data.get("achievements", [])
-        for achievement in achievements_list:
-            st.write(achievement)
+# Achievements Section
+elif nav == "Achievements":
+    st.header("Achievements")
+    achievements_list = portfolio_data.get("achievements", [])
+    for achievement in achievements_list:
+        st.write(f"- {achievement}")
 
-# # Add a final check
-# st.write("Debugging info:", portfolio_data)
+# Footer
+st.markdown("<div class='footer'>Thanks for visiting! Feel free to connect with me on LinkedIn or GitHub.</div>", unsafe_allow_html=True)
